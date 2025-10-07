@@ -1,15 +1,13 @@
 
 
 import React from 'react'
-import Header from './components/Header'
-import JobCard from './components/JobCard'
-import ResultCard from './components/ResultCard'
-import Footer from './components/Footer'
-import Banner from './components/Banner'
-import HeadingSubHeading from './components/HeadingSubHeading'
-import JobTitleCard from './components/JobTitleCard'
-import HeroSection from './components/HeroSection'
-import DynamicButton from './components/DynamicButton'
+import Header from '../components/Header'
+import JobCard from '../components/JobCard'
+import ResultCard from '../components/ResultCard'
+import Footer from '../components/Footer'
+import Banner from '../components/Banner'
+import HeroSection from '../components/HeroSection'
+import DynamicButton from '../components/DynamicButton'
 import { Grid } from "@mui/material";
 
 export const dummyJobs = [
