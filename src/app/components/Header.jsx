@@ -51,7 +51,7 @@ const HeaderMainContainer = styled("div")({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  padding: "10px 20px",
+  padding: "1px 20px",
   borderRadius: "32px",
   color: "#fff",
   boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
