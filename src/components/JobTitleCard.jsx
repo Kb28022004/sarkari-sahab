@@ -3,9 +3,9 @@
 import { styled } from "@mui/material";
 import Image from "next/image";
 import React from "react";
-import ColorIcon from "../../../public/ColorLogo.svg";
-import ClockIcon from "../../../public/clock.svg";
-import JobOutlineLogo from "../../../public/jobOutline.svg";
+import ColorIcon from "../../public/ColorLogo.svg";
+import ClockIcon from "../../public/clock.svg";
+import JobOutlineLogo from "../../public/jobOutline.svg";
 import DynamicButton from "./DynamicButton";
 
 const JobTitleCard = ({ heading, lastDate, category, postedDate }) => {

@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import { styled, Box, InputBase } from "@mui/material";
-import JobIcon from '../../../public/jobIcon.svg';
-import resultIcon from '../../../public/resultIcon.svg';
-import admitCardIcon from '../../../public/admitCard.svg';
-import planeIcon from '../../../public/plane.svg';
-import bulbIcon from '../../../public/bulb.svg';
+import JobIcon from '../../public/jobIcon.svg';
+import resultIcon from '../../public/resultIcon.svg';
+import admitCardIcon from '../../public/admitCard.svg';
+import planeIcon from '../../public/plane.svg';
+import bulbIcon from '../../public/bulb.svg';
 import SearchIcon from "@mui/icons-material/Search";
 import Image from 'next/image';
 import DynamicButton from "./DynamicButton";

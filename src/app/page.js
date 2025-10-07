@@ -38,8 +38,7 @@ export const dummyResults = [
 
 const page = () => {
   return (
-    <div style={{ backgroundColor: "#F8F8F8" }} >
-      <Header />
+    <div>
       <HeroSection />
       <div style={{ marginTop: "6rem", paddingLeft: "7rem", width: "85%", paddingBottom: "6rem" }}>
         <h2 style={{ fontSize: "50px" }}>Latest jobs available</h2>
@@ -92,7 +91,6 @@ const page = () => {
       <div style={{paddingBottom:"8rem"}}>
       <Banner/>
       </div>
-      <Footer/>
     </div>
   )
 }
