@@ -3,7 +3,7 @@
 import { styled } from '@mui/material'
 import Image from 'next/image'
 import React from 'react'
-import JobIcon from '../../../public/jobIcon.svg'
+import JobIcon from '../../public/jobIcon.svg'
 import DynamicButton from './DynamicButton'
 
 const JobCard = ({heading,date}) => {

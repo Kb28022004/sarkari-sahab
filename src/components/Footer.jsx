@@ -3,7 +3,7 @@
 import React from "react";
 import { styled } from "@mui/material";
 import DynamicButton from "./DynamicButton";
-import JobIcon from '../../../public/jobIcon.svg'
+import JobIcon from '../../public/jobIcon.svg'
 import Image from "next/image";
 
 // Footer link data

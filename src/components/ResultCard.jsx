@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { styled } from "@mui/material"; 
-import resultIcon from '../../../public/resultIcon.svg'
+import resultIcon from '../../public/resultIcon.svg'
 import Image from "next/image";
 import DynamicButton from "./DynamicButton";
 
