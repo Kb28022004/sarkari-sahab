@@ -66,7 +66,7 @@ export default Footer;
 
 // ✅ Styled Components
 const FooterContainer = styled("footer")({
-  width: "88vw",
+  width: "100vw",
   backgroundColor: "#1E1E23",
   color: "#fff",
   padding: "40px 80px",

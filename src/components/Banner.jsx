@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
-import BannerImage from '../../../public/Banner.svg'
+import BannerImage from '../../public/Banner.svg'
 import Link from 'next/link'
 
 const Banner = () => {

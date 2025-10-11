@@ -7,8 +7,17 @@ import ColorIcon from "../../public/ColorLogo.svg";
 import ClockIcon from "../../public/clock.svg";
 import JobOutlineLogo from "../../public/jobOutline.svg";
 import DynamicButton from "./DynamicButton";
+import { getTimeAgo } from "../utils/timeUtils";
+import Link from "next/link";
 
-const JobTitleCard = ({ heading, lastDate, category, postedDate }) => {
+const JobTitleCard = ({
+  heading,
+  lastDate,
+  category,
+  postedDate,
+  department,
+  id
+}) => {
   return (
     <JobCardContainer>
       <p
@@ -21,11 +30,14 @@ const JobTitleCard = ({ heading, lastDate, category, postedDate }) => {
           fontSize: "12px",
         }}
       >
-        djkafjda
+        {getTimeAgo(postedDate)}
       </p>
-      <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-        <Image src={ColorIcon} height={20} />
-        <h3>{heading || "ksdfakdsa"}</h3>
+      <div style={{ display: "flex", gap: "30px", alignItems: "center" }}>
+        <Image src={ColorIcon} height={50} />
+        <div>
+          <h3>{heading || "N/A"}</h3>
+          <h4>{department || "N/A"}</h4>
+        </div>
       </div>
       <div
         style={{
@@ -43,12 +55,15 @@ const JobTitleCard = ({ heading, lastDate, category, postedDate }) => {
             </div>
             <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
               <Image height={15} src={ClockIcon} />
-              <p>{category || "defg"}</p>
+              <p>
+                {" "}
+                Last date : {new Date(lastDate).toLocaleDateString() || "defg"}
+              </p>
             </div>
           </div>
         </div>
 
-        <DynamicButton text="Job Details" textColor="#18BC51" color="#094F21" />
+        <DynamicButton text="Job Details" component={Link} href={`/job-details/${id}`} textColor="#ffffffff" />
       </div>
     </JobCardContainer>
   );
@@ -62,5 +77,7 @@ const JobCardContainer = styled("div")({
   backgroundColor: "#FFFFFF",
   flexDirection: "column",
   display: "flex",
+  gap:"15px",
   borderRadius: "12px",
+  padding: "20px",
 });

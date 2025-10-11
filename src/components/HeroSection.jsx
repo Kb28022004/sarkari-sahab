@@ -50,21 +50,21 @@ const HeroSection = ({ jobCount, admitCardCount, resultCount }) => {
             {/* Stats */}
             <StatsContainer>
                 <StatItem>
-                    <Image src={JobIcon} height={30} width={30} alt="Jobs Icon" />
+                    <Image src={JobIcon} height={50} width={50} alt="Jobs Icon" />
                     <StatText>
-                        <strong>{jobCount || "20,320"}</strong> Jobs
+                        <strong>{jobCount || "0"}</strong> Jobs
                     </StatText>
                 </StatItem>
 
                 <StatItem>
-                    <Image src={resultIcon} height={30} width={30} alt="Result Icon" />
+                    <Image src={resultIcon} height={50} width={50} alt="Result Icon" />
                     <StatText>
                         <strong>{resultCount || "20,320"}</strong> Result
                     </StatText>
                 </StatItem>
 
                 <StatItem>
-                    <Image src={admitCardIcon} height={30} width={30} alt="Admit Card Icon" />
+                    <Image src={admitCardIcon} height={50} width={50} alt="Admit Card Icon" />
                     <StatText>
                         <strong>{admitCardCount || "20,320"}</strong> Admit Card
                     </StatText>
@@ -210,7 +210,7 @@ const StatsContainer = styled(Box)({
 const StatItem = styled(Box)({
     display: "flex",
     alignItems: "center",
-    gap: "10px",
+    gap: "20px",
     color: "#0d1b2a",
 });
 

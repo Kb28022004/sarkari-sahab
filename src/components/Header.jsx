@@ -5,26 +5,29 @@ import { styled } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import TelegramIcon from "@mui/icons-material/Telegram";
+import Link from "next/link";
 
 const listData = [
-  { name: "Home" },
-  { name: "Job" },
-  { name: "Result" },
-  { name: "Admit Card" },
-  { name: "Admission" },
-  { name: "Answer Key" },
+  { name: "Home", to: "/" },
+  { name: "Job", to: "/jobs" },
+  { name: "Result", to: "/result" },
+  { name: "Admit Card", to: "/admit-card" },
+  { name: "Admission", to: "/admission" },
+  { name: "Answer Key", to: "/answer-key" },
 ];
 
 const Header = () => {
   return (
     <HeaderMainContainer>
-      {/* Logo or title */}
+      {/* Logo */}
       <HeaderTitle>Sarkari Sahab</HeaderTitle>
 
-      {/* Navigation Menu */}
+      {/* Navigation */}
       <NavList>
         {listData.map((item, index) => (
-          <NavItem key={index}>{item.name}</NavItem>
+          <NavItem href={item.to || "#"} key={index}>
+            {item.name}
+          </NavItem>
         ))}
       </NavList>
 
@@ -51,7 +54,7 @@ const HeaderMainContainer = styled("div")({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  padding: "1px 20px",
+  padding: "20px 20px",
   borderRadius: "32px",
   color: "#fff",
   boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
@@ -70,11 +73,12 @@ const NavList = styled("div")({
   gap: "20px",
 });
 
-const NavItem = styled("p")({
+const NavItem = styled(Link)({
   fontSize: "16px",
   fontWeight: 500,
   color: "#fff",
   cursor: "pointer",
+  textDecoration:"none",
   transition: "all 0.3s ease",
   "&:hover": {
     color: "#18BC51",
@@ -91,7 +95,7 @@ const SocialIcons = styled("div")({
     cursor: "pointer",
     transition: "color 0.3s ease",
     "&:hover": {
-      color: " #18BC51",
+      color: "#18BC51",
     },
   },
 });

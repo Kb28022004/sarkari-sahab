@@ -1,28 +1,20 @@
 "use client";
 
-import React from "react";
-import { Box, InputBase, styled } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  InputBase,
+  styled,
+  Button,
+  CircularProgress,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import TuneIcon from '@mui/icons-material/Tune';
+import TuneIcon from "@mui/icons-material/Tune";
 import HeadingSubHeading from "@/components/components/HeadingSubHeading";
 import JobTitleCard from "@/components/components/JobTitleCard";
 import DynamicButton from "@/components/components/DynamicButton";
+import axios from "axios";
 
-// --- Dummy Job Data ---
-export const dummyJobs = [
-  { id: 1, heading: "Software Engineer", lastDate: "15 Oct 2025", category: "IT", postedDate: "01 Oct 2025" },
-  { id: 2, heading: "Data Analyst", lastDate: "18 Oct 2025", category: "Analytics", postedDate: "02 Oct 2025" },
-  { id: 3, heading: "Civil Engineer", lastDate: "20 Oct 2025", category: "Construction", postedDate: "03 Oct 2025" },
-  { id: 4, heading: "Marketing Manager", lastDate: "22 Oct 2025", category: "Marketing", postedDate: "04 Oct 2025" },
-  { id: 5, heading: "UI/UX Designer", lastDate: "25 Oct 2025", category: "Design", postedDate: "05 Oct 2025" },
-  { id: 6, heading: "HR Executive", lastDate: "28 Oct 2025", category: "Human Resources", postedDate: "06 Oct 2025" },
-  { id: 7, heading: "Accountant", lastDate: "30 Oct 2025", category: "Finance", postedDate: "07 Oct 2025" },
-  { id: 8, heading: "Operations Manager", lastDate: "02 Nov 2025", category: "Operations", postedDate: "08 Oct 2025" },
-  { id: 9, heading: "Content Writer", lastDate: "05 Nov 2025", category: "Content", postedDate: "09 Oct 2025" },
-  { id: 10, heading: "Customer Support Executive", lastDate: "10 Nov 2025", category: "Support", postedDate: "10 Oct 2025" },
-];
-
-// --- Styled Components ---
 const PageContainer = styled("div")({
   width: "100vw",
   backgroundColor: "#F8F8F8",
@@ -69,28 +61,132 @@ const CardsContainer = styled("div")({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  gap: "1.5rem", // spacing between cards
+  gap: "1.5rem",
   padding: "0 1rem",
   marginTop: "1rem",
 });
 
-// --- Main Component ---
+const LoaderContainer = styled("div")({
+  width: "100%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "2rem",
+});
+
+const ViewMoreContainer = styled("div")({
+  display: "flex",
+  justifyContent: "center",
+  marginTop: "2rem",
+});
+
 const Page = () => {
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [hasMore, setHasMore] = useState(true);
+
+  const fetchJobs = async (params = {}) => {
+    const { lastId, title, isLoadMore = false } = params;
+
+    try {
+      if (isLoadMore) {
+        setLoadingMore(true);
+      } else {
+        setLoading(true);
+      }
+
+      const queryParams = new URLSearchParams();
+      queryParams.append("limit", 20);
+      if (lastId) queryParams.append("lastId", lastId);
+      if (title) queryParams.append("title", title);
+
+      const url = `${
+        process.env.NEXT_PUBLIC_BASE_URL
+      }/job?${queryParams.toString()}`;
+      const response = await axios.get(url);
+      const resData = response.data;
+
+      const jobsArray = Array.isArray(resData)
+        ? resData
+            .filter((item) => item.status === "fulfilled")
+            .flatMap((item) => {
+              const data = item.value?.data;
+              if (Array.isArray(data)) return data;
+              if (Array.isArray(data?.jobs)) return data.jobs;
+              if (Array.isArray(data?.result)) return data.result;
+              return [];
+            })
+        : Array.isArray(resData?.data)
+        ? resData.data
+        : Array.isArray(resData?.data?.jobs)
+        ? resData.data.jobs
+        : Array.isArray(resData?.data?.result)
+        ? resData.data.result
+        : [];
+
+      if (isLoadMore) {
+        setJobs((prev) => [...prev, ...jobsArray]);
+      } else {
+        setJobs(jobsArray);
+      }
+
+      if (jobsArray.length < 20) {
+        setHasMore(false);
+      } else {
+        setHasMore(true);
+      }
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (searchQuery.trim().length > 0) {
+        fetchJobs({ title: searchQuery });
+      } else {
+        fetchJobs();
+      }
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [searchQuery]);
+
+  const handleViewMore = () => {
+    if (!hasMore || loadingMore || jobs.length === 0) return;
+    const lastId = jobs[jobs.length - 1]?._id || jobs[jobs.length - 1]?.id;
+    if (lastId) {
+      fetchJobs({ lastId, title: searchQuery, isLoadMore: true });
+    }
+  };
+
   return (
     <PageContainer>
-      {/* Heading */}
       <HeadingSubHeading
         heading="Jobs"
-        subheading="Latest government and private jobs — updated daily with official links and deadlines"/>
+        subheading="Latest government and private jobs — updated daily with official links and deadlines"
+      />
 
-      {/* Search Bar + Buttons */}
       <SearchWrapper>
         <SearchContainer>
           <SearchIcon sx={{ color: "#555" }} />
-          <SearchInput placeholder="Search by: Job title, Position, Keyword..." />
+          <SearchInput
+            placeholder="Search by: Job title..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </SearchContainer>
 
-        <DynamicButton
+        {/* <DynamicButton
           startIcon={<TuneIcon />}
           text="Filter"
           color="#F1F2F4"
@@ -102,24 +198,46 @@ const Page = () => {
         <DynamicButton
           text="Find Job"
           textColor="#ffffff"
-          color="#18BC51"
           borderRadius="25px"
           padding="14px 40px"
-        />
+        /> */}
       </SearchWrapper>
 
       {/* Job Cards */}
       <CardsContainer>
-        {dummyJobs.map((job) => (
-          <JobTitleCard
-            key={job.id}
-            heading={job.heading}
-            lastDate={job.lastDate}
-            category={job.category}
-            postedDate={job.postedDate}
-          />
-        ))}
+        {loading ? (
+          <LoaderContainer>
+            <CircularProgress sx={{ color: "#309689" }} />
+          </LoaderContainer>
+        ) : jobs.length > 0 ? (
+          jobs.map((job, index) => (
+            <JobTitleCard
+              key={job._id || job.id || index}
+              id={job._id}
+              department={job?.department || "N/A"}
+              heading={
+                job.heading || job.title || job.jobTitle || "Untitled Job"
+              }
+              lastDate={job?.importantDates?.endDate || job.deadline || "N/A"}
+              category={job.category || job.department || "General"}
+              postedDate={job?.updatedAt || job.createdAt || "N/A"}
+            />
+          ))
+        ) : (
+          <p>No jobs found</p>
+        )}
       </CardsContainer>
+
+      {/* View More Button */}
+      {hasMore && jobs.length > 0 && (
+        <ViewMoreContainer>
+          <DynamicButton
+            text={loadingMore ? "Loading..." : "View More"}
+            onClick={handleViewMore}
+            disabled={loadingMore}
+          />
+        </ViewMoreContainer>
+      )}
     </PageContainer>
   );
 };

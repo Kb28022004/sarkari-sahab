@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import { Figtree, Martel, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -12,6 +13,23 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+const figtree = Figtree({
+  subsets: ["latin"],
+  variable: "--font-figtree",
+  weight: ["400", "500", "600", "700"],
+});
+
+const martel = Martel({
+  subsets: ["latin"],
+  variable: "--font-martel",
+  weight: ["400", "700"],
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  weight: ["400", "500", "600", "700"],
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -20,16 +38,17 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html
+      lang="en"
+      className={`${figtree.variable} ${martel.variable} ${inter.variable}`}
+    >
       <body
         className="font-sans"
         style={{
-          backgroundColor: "#F8F8F8",
           margin: 0,
           padding: 0,
-          minHeight: "100vh",
-          display: "flex",
-          flexDirection: "column",
+
+          boxSizing: "border-box",
         }}
       >
         {/* Header */}

@@ -1,0 +1,17 @@
+body {
+  font-family: var(--font-figtree), sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-martel), serif;
+}
+
+p, span, button {
+  font-family: var(--font-inter), sans-serif;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}

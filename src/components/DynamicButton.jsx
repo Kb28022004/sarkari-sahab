@@ -13,7 +13,8 @@ const DynamicButton = ({
   onClick,
   type,
   sx,
-  to,
+  href,
+  background,
   borderRadius,
   padding, // ✅ new dynamic prop
 }) => {
@@ -26,10 +27,11 @@ const DynamicButton = ({
       textColor={textColor}
       borderColor={borderColor}
       onClick={onClick}
-      to={to}
+      href={href}
       sx={sx}
       type={type}
       component={component}
+      background={background}
       borderRadius={borderRadius}
       padding={padding} // pass padding to styled component
     >
@@ -41,12 +43,13 @@ const DynamicButton = ({
 export default DynamicButton;
 
 const CustomButtonContainer = styled(Button)(
-  ({ customcolor, textColor, borderColor, borderRadius, padding }) => ({
+  ({ customcolor, textColor, borderColor, borderRadius, padding,background }) => ({
     borderRadius: borderRadius || "8px",
     width: "auto",
     height: "auto",
     padding: padding || "8px 12px", // ✅ dynamic padding with default
     backgroundColor: customcolor,
+    background:`linear-gradient(to right,#18BC51,#094F21)`,
     fontSize: "12px",
     fontWeight: 400,
     fontFamily: "Roboto",
