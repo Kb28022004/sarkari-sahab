@@ -21,7 +21,7 @@ export default HeadingSubHeading;
 const HeadingSubHeadingContainer = styled("div")({
   width: "100vw",
   height: "auto",
-  background: "linear-gradient(to right, #FFF6E6, #FFFFFF)",
+  // background: "linear-gradient(to right, #FFF6E6, #FFFFFF)",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",

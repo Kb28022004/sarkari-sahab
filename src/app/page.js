@@ -189,8 +189,6 @@ const Page = () => {
       <div style={{ paddingBottom: "8rem" }}>
         <Banner />
       </div>
-
-      <Footer />
     </div>
   );
 };
